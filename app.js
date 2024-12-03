@@ -1,5 +1,5 @@
 // Require MongoDB language driver
-const { MongoClient } = require("mongodb")
+const { MongoClient, ObjectId } = require("mongodb")
 require('dotenv').config()
 
 const uri = process.env.MONGODB_URI
@@ -36,10 +36,12 @@ const sampleAccount = [
    },
 ]
 
+const documentToFind = { _id: new ObjectId('674e32241a2813dc82438de9') }
+
 async function main() {
    try {
       await connectToDatabase()
-      let result = await accountsCollection.insertMany(sampleAccount)
+      let result = await accountsCollection.findOne(documentToFind)
       console.log(`Inserted ${result.insertedCount} documents`)
       console.log(result)
    } catch (error) {
